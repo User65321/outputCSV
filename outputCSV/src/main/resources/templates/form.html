@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>一覧</title>
+<style>
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* テーブルのスタイル */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #333;
+  color: #fff;
+}
+
+
+/* メインコンテンツのスタイル */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* ボタンのスタイル */
+.button {
+  color: rgb(0, 104, 218);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: rgb(142, 142, 147);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(0, 122, 255);
+}
+
+h2{
+	text-align:center;
+}
+
+div#addBook {
+	text-align:center;
+	margin: 0 auto;
+	margin-bottom: 80px; 
+	width: 300px;
+	height: 100px;
+	padding: 20px;
+	background-color: #fff;
+}
+
+span.eMessage{
+	color:red;
+}
+
+
+</style>
+
+
+</head>
+<body>
+<a href="/">一覧表示</a>
+
+<!--
+  <form method="post" action="/create" th:object="${inventory}">
+  
+    <input type="hidden" name="id" th:value="*{id}"> 
+      
+    <div class="mb-3">
+      <label for="book" class="form-label">書籍名</label>
+      <input type="text" class="form-control" name="book" th:value="*{book}" required>
+    </div>
+
+    
+   <div class="mb-3">
+      <label for="price" class="form-label">価格</label>
+      <input type="text" class="form-control" name="price" th:values="*{price}" required/>
+   </div>
+   
+   <div class="form-group">
+  	<label for="quantity">在庫数</label>
+    <input type="number" class="input" name="quantity" th:values="*{quantity}" required>
+  </div>
+  
+   
+    <div class="mb-3">
+    <input type="submit"  class="btn btn-primary" value="Create"/>
+    </div>
+  
+  </form>
+  -->
+  
+  <h2>書籍の追加</h2>
+  <div id="addBook">
+
+  <form method="post" action="/create" th:object="${inventory}">
+  
+  <input type="hidden" name="id" th:value="*{id}">
+  
+  <div class="form-group">
+  	<label for="book">商品名</label>
+    <input type="text"   th:field="*{book}"><br>
+    <span class="eMessage" th:if="${#fields.hasErrors('book')}" th:errors="*{book}"></span>
+  </div>
+  
+
+  
+  <div class="form-group">
+  	<label for="price">価格　</label>
+    <input type="text"   th:field="*{price}"><br>
+    <span class="eMessage" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+  </div>
+  
+    <div class="form-group">
+  	<label for="quantity">数量　</label>
+    <input type="number" th:field="*{quantity}"><br>
+    <span class="eMessage "th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>
+  </div>
+  
+  <input type="submit" class="button" value="登録"></input>
+
+  </form>
+  </div>
+
+  <table >
+    <thead>
+      <tr>
+      	<th>ID</th><th>書籍名</th><th>価格</th><th>数量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="inventory : ${data}"　>
+        <td th:text="${inventory.id}"></td>
+        <td th:text="${inventory.book}"></td>
+        <td th:text="${inventory.price}"></td>
+        <td th:text="${inventory.quantity}"></td>
+        <td><a th:href="@{edit/{id}(id=${inventory.id})}">編集</td>
+        
+        <td class="button">
+        	<form th:action="@{/delete}" method="post">
+        	<input type="hidden" name="id" th:value="${inventory.id}"/>
+        	<input type="submit"  value="削除"/>
+        	</form>
+        
+        </td>
+
+
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

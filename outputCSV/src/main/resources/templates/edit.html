@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>一覧</title>
+<style>
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* テーブルのスタイル */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #333;
+  color: #fff;
+}
+
+
+/* メインコンテンツのスタイル */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+/* ボタンのスタイル */
+.button {
+  color: rgb(0, 104, 218);
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: rgb(142, 142, 147);
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(0, 122, 255);
+}
+
+h2{
+	text-align:center;
+}
+
+div#addBook {
+	text-align:center;
+	margin: 0 auto;
+	width: 350px;
+	height: 100px;
+	padding: 20px;
+	background-color: #fff;
+}
+</style>
+
+
+<!--
+<script>
+
+function check(){
+	//書籍名のnullチェック
+	if(document.form.book.value==""){
+		window.alert("書籍名の値が未入力です")
+		return false;
+	//価格のnullチェック
+	}else if(document.form.price.value==""){
+		window.alert("価格の値が未入力です")
+		return false;
+	}else{
+		return true;
+	}
+}
+
+-->
+
+
+
+
+</script>
+
+
+</head>
+<body>
+<a href="/">一覧表示</a>
+
+  <div id="addBook">
+  <form method="post" action="/update" th:object="${inventory}"> 
+  
+  <input type="hidden" th:field="*{id}">       
+      
+  <div class="form-group">
+  <span th:if="${#fields.hasErrors('book')}" th:errors="*{book}"></span>
+  	<label for="productName">商品名</label>
+  	<input type="text" class="input" th:field="*{book}" reqired>
+  </div>
+    
+ 
+  <div class="form-group">
+  	<label for="price">価格　</label>
+    <input type="text"  class="input" th:field="*{price}">
+  </div>
+  
+  <div class="form-group">
+  	<label for="quantity">数量　</label>
+    <input type="number" class="input"  th:field="*{quantity}">
+  </div>
+   
+   
+   <div class="mb-3">
+    <input type="submit"  class="btn btn-primary" value="Update">
+   </div>
+  </form>
+  </div>
+  
+</body>
+</html>
